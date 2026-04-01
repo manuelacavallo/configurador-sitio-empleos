@@ -1,0 +1,141 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.controlWrapper {
+  position: relative;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-default);
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--neutral-200);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.focused {
+  border-color: var(--brand-400);
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: var(--text-default);
+  background: transparent;
+}
+
+.searchInput::placeholder {
+  color: var(--text-placeholder);
+}
+
+.value {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-default);
+}
+
+.placeholder {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-placeholder);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--neutral-400);
+}
+
+.clearBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--neutral-400);
+  border-radius: 4px;
+}
+.clearBtn:hover {
+  color: var(--text-default);
+}
+
+.chevron {
+  transition: transform 0.15s;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--neutral-200);
+  border-radius: 8px;
+  box-shadow: var(--shadow-dropdown);
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--neutral-150);
+  transition: background-color 0.1s;
+}
+
+.option:last-child {
+  border-bottom: none;
+}
+
+.option:hover {
+  background: var(--neutral-50);
+}
+
+.selected {
+  background: var(--neutral-50);
+}
+
+.optionId {
+  font-size: 10px;
+  color: var(--text-lighter);
+}
+
+.optionName {
+  font-size: 14px;
+  color: var(--text-default);
+}
+
+.empty {
+  padding: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-lighter);
+}
+
+.helper {
+  font-size: 12px;
+  color: var(--text-lighter);
+}

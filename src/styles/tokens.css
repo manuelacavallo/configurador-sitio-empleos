@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap');
+
+:root {
+  /* Texto */
+  --text-default: #303036;
+  --text-lighter: #636271;
+  --text-placeholder: #aaaaba;
+
+  /* Marca */
+  --brand-400: #6f93eb;
+  --brand-500: #496be3;
+  --brand-600: #3851d8;
+  --brand-700: #2f3fc6;
+
+  /* Neutrales */
+  --neutral-50: #f5f6f8;
+  --neutral-100: #eeeef1;
+  --neutral-150: #E9E9ED;
+  --neutral-200: #dfe0e6;
+  --neutral-300: #cbcdd6;
+  --neutral-400: #b5b6c4;
+
+  /* Estados */
+  --red-500: #e74444;
+  --green-600: #28c040;
+  --yellow-500: #f0b623;
+
+  /* Superficies */
+  --white: #ffffff;
+  --background-page: #f5f6f8;
+
+  /* Sombras */
+  --shadow-card: -1px 4px 8px 0px rgba(233, 233, 244, 1);
+  --shadow-dropdown: -1px 8px 16px 0px rgba(170, 170, 186, 0.45);
+  --shadow-bottom-sheet: 0px -2px 24px 0px rgba(103, 103, 121, 0.50);
+}

@@ -1,0 +1,34 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid var(--neutral-200);
+  background: var(--white);
+}
+
+.left {
+  min-width: 256px;
+}
+
+.backBtn {
+  width: 256px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #29317F;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  cursor: pointer;
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.backBtn:hover {
+  background: #f1f4fd;
+}

@@ -1,0 +1,184 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
+.desc {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-lighter);
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
+/* Accordion summary section */
+.summarySection {
+  border: 1px solid var(--neutral-200);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.summaryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.summaryHeader:hover {
+  background: var(--neutral-50);
+}
+
+.summaryHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusIcon {
+  flex-shrink: 0;
+}
+
+.successAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f5fdf6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.infoAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f8fdfe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.warningAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fdfaec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.summaryTitle {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  color: var(--text-default);
+}
+
+.chevron {
+  color: var(--neutral-400);
+  transition: transform 0.2s;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Expanded content */
+.summaryContent {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Sub-sections (grey cards) */
+.subSection {
+  background: var(--neutral-100);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.subSectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  color: var(--text-default);
+}
+
+/* Rows */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 4px 0;
+}
+
+.rowLabel {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  color: var(--text-default);
+}
+
+.rowValue {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  color: var(--text-default);
+  text-align: right;
+  word-break: break-all;
+}
+
+.rowPending {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  color: #92400e;
+  background: #fef3c7;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* Edit button row */
+.editRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.disabled {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-lighter);
+  letter-spacing: 0.2px;
+}

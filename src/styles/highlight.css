@@ -1,0 +1,64 @@
+/* ===========================================
+   Preview Section Highlight System
+
+   Unified highlight for all preview sections.
+   Uses outline (no layout shift) + brand-tinted
+   glow shadow + smooth transitions.
+
+   Colors from Humand design system:
+   - Humand 300: #9db8f3 (outline)
+   - Humand 400: #6f93eb (glow tint)
+   - Humand 50:  #f1f4fd (subtle fill)
+   =========================================== */
+
+/* Shared transition on ALL highlightable sections */
+[data-highlight-zone] {
+  position: relative;
+  transition:
+    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    outline-color 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+}
+
+/* Active highlight state */
+[data-highlight-zone].preview-highlight-active {
+  outline-color: #9db8f3;
+  box-shadow:
+    0 0 0 4px rgba(111, 147, 235, 0.12),
+    0 0 16px 2px rgba(111, 147, 235, 0.10),
+    -1px 8px 16px 0px rgba(170, 170, 186, 0.25);
+  z-index: 2;
+}
+
+/* Subtle background tint overlay via pseudo-element */
+[data-highlight-zone]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(111, 147, 235, 0.04);
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+[data-highlight-zone].preview-highlight-active::after {
+  opacity: 1;
+}
+
+/* Browser chrome highlight (specific) */
+[data-highlight-zone="browser-chrome"].preview-highlight-active {
+  border-radius: 8px 8px 0 0;
+  outline-offset: -2px;
+  box-shadow:
+    0 0 0 4px rgba(111, 147, 235, 0.12),
+    0 0 16px 2px rgba(111, 147, 235, 0.10),
+    -1px 8px 16px 0px rgba(170, 170, 186, 0.25);
+}
+
+/* Footer highlight */
+[data-highlight-zone="footer"].preview-highlight-active {
+  border-radius: 0 0 8px 8px;
+}

@@ -1,0 +1,73 @@
+.btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: none;
+  transition: background-color 0.15s, border-color 0.15s;
+  min-width: 104px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* Large variant for footer */
+.large {
+  padding: 12px 16px;
+  font-size: 16px;
+  min-width: 256px;
+  letter-spacing: 0.2px;
+}
+
+.primary {
+  background: var(--brand-500);
+  color: var(--white);
+}
+.primary:hover:not(:disabled) {
+  background: var(--brand-600);
+}
+.primary:active:not(:disabled) {
+  background: var(--brand-700);
+}
+
+.secondary {
+  background: var(--white);
+  border: 1px solid #c5d4f8;
+  color: #29317f;
+}
+.secondary:hover:not(:disabled) {
+  background: #f1f4fd;
+}
+
+.link {
+  background: none;
+  border: none;
+  color: #29317F;
+  padding: 0;
+  min-width: auto;
+}
+.link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.danger {
+  background: none;
+  border: 1px solid var(--red-500);
+  color: var(--red-500);
+}
+.danger:hover:not(:disabled) {
+  background: rgba(231, 68, 68, 0.05);
+}

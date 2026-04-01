@@ -1,0 +1,27 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+}
+
+.default {
+  background: #f1f4fd;
+  color: #29317F;
+  border: 1px solid #c5d4f8;
+}
+
+.brand {
+  background: #f1f4fd;
+  color: #29317F;
+  border: 1px solid #c5d4f8;
+}
+
+.error {
+  background: #fef2f2;
+  color: var(--red-500);
+}

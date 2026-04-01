@@ -1,0 +1,97 @@
+.stepHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.stepTitle {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
+.stepDesc {
+  font-size: 14px;
+  color: var(--text-lighter);
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background: var(--neutral-100);
+  border: none;
+  border-radius: 16px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.sectionDesc {
+  font-size: 14px;
+  color: var(--text-lighter);
+  letter-spacing: 0.2px;
+  margin-top: -8px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-default);
+  display: block;
+  margin-bottom: 4px;
+  letter-spacing: 0.2px;
+}
+
+.required {
+  color: var(--red-500);
+  margin-left: 2px;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.toggleLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toggleLabelText {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
+.toggleLabelDesc {
+  font-size: 14px;
+  color: var(--text-lighter);
+  letter-spacing: 0.2px;
+}
+
+.whiteCard {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

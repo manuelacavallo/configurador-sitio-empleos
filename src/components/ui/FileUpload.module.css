@@ -1,0 +1,148 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dropzone {
+  border: 1px dashed var(--neutral-200);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+  background: var(--white);
+}
+
+.dropzone:hover {
+  border-color: var(--brand-400);
+  background: #f1f4fd;
+}
+
+.hasError {
+  border-color: var(--red-500);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dropText {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-default);
+  letter-spacing: 0.2px;
+}
+
+.dropSubtext {
+  font-size: 14px;
+  color: var(--text-lighter);
+  letter-spacing: 0.2px;
+}
+
+.uploadLink {
+  font-size: 14px;
+  font-weight: 600;
+  color: #29317f;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  border: 1px solid #c5d4f8;
+  border-radius: 8px;
+  background: var(--white);
+  letter-spacing: 0.2px;
+  cursor: pointer;
+}
+.uploadLink:hover {
+  background: #f1f4fd;
+}
+
+.fileDisplay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: var(--white);
+  border: 1px solid var(--neutral-200);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.fileAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  background: #faf3fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fileInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.fileName {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+  color: var(--text-default);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileMeta {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+  color: var(--text-lighter);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fileActions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--text-default);
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 8px;
+}
+.actionBtn:hover {
+  background: var(--neutral-50);
+}
+
+.helper {
+  font-size: 16px;
+  color: var(--text-lighter);
+  letter-spacing: 0.2px;
+}
+
+.error {
+  font-size: 14px;
+  color: var(--red-500);
+}

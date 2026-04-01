@@ -1,0 +1,43 @@
+.wrapper {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--white);
+}
+
+.header:hover {
+  background: var(--neutral-50);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-default);
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+}
+
+.chevron {
+  color: var(--neutral-400);
+  transition: transform 0.2s;
+}
+
+.open {
+  transform: rotate(180deg);
+}
+
+.content {
+  padding: 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
