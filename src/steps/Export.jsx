@@ -117,7 +117,9 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
       {exportResult && (
         <InfoBox variant="success">
           <strong>Configuración exportada</strong><br />
-          Los archivos se descargaron correctamente: {exportResult.configName} y {exportResult.zipName}
+          {exportResult.zipName
+            ? `Se descargaron: ${exportResult.configName} y ${exportResult.zipName}`
+            : `Se descargó: ${exportResult.configName}`}
         </InfoBox>
       )}
 
@@ -160,29 +162,33 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
               <SummaryRow label="Título" value={state.homePage.hero.title} pending={!state.homePage.hero.title} />
               <SummaryRow label="Imagen" value="Subido" pending={!state.homePage.hero.image} />
             </SubSection>
-            {state.homePage.infoSection.enabled && (
-              <SubSection title="Sección informativa">
-                {state.homePage.infoSection.showTitleDescription && (
-                  <>
-                    <SummaryRow label="Título" value={state.homePage.infoSection.title || '—'} />
-                    <SummaryRow label="Descripción" value={state.homePage.infoSection.description || '—'} />
-                  </>
-                )}
-                {state.homePage.infoSection.cards.map((card, i) => (
-                  <SummaryRow
-                    key={card.id}
-                    label={`Card ${i + 1}`}
-                    value={card.title || '—'}
-                    pending={!isInfoCardComplete(card)}
-                  />
-                ))}
-                {hasIncompleteInfoCards && (
-                  <InfoBox variant="warning">
-                    Completá al menos una card con imagen, título y descripción para que la sección informativa se muestre en tu sitio.
-                  </InfoBox>
-                )}
-              </SubSection>
-            )}
+            <SubSection title="Sección informativa">
+              {!state.homePage.infoSection.enabled ? (
+                <span className={styles.rowEmpty}>No configurada</span>
+              ) : (
+                <>
+                  {state.homePage.infoSection.showTitleDescription && (
+                    <>
+                      <SummaryRow label="Título" value={state.homePage.infoSection.title || '—'} />
+                      <SummaryRow label="Descripción" value={state.homePage.infoSection.description || '—'} />
+                    </>
+                  )}
+                  {state.homePage.infoSection.cards.map((card, i) => (
+                    <SummaryRow
+                      key={card.id}
+                      label={`Card ${i + 1}`}
+                      value={card.title || '—'}
+                      pending={!isInfoCardComplete(card)}
+                    />
+                  ))}
+                  {hasIncompleteInfoCards && (
+                    <InfoBox variant="warning">
+                      Completá al menos una card con imagen, título y descripción para que la sección informativa se muestre en tu sitio.
+                    </InfoBox>
+                  )}
+                </>
+              )}
+            </SubSection>
           </>
         )}
       </SummarySection>
@@ -193,8 +199,8 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
         onEdit={() => onNavigateToStep(2)}
       >
         <SubSection title="Encabezado">
-          <SummaryRow label="Título" value={state.jobList.title} pending={!state.jobList.title} />
-          <SummaryRow label="Descripción" value={state.jobList.description || '—'} />
+          <SummaryRow label="Título" value={state.jobList.title || 'Forma parte de nuestro equipo'} />
+          <SummaryRow label="Descripción" value={state.jobList.description || 'Descubre nuestras oportunidades laborales y elige el puesto ideal para ti.'} />
           <SummaryRow label="Imagen" value={state.jobList.image ? 'Subido' : '—'} />
         </SubSection>
       </SummarySection>

@@ -22,7 +22,7 @@ export function validateStep(step, state) {
   }
 
   if (step === 2) {
-    if (!state.jobList.title.trim()) errors['jobList.title'] = 'Campo obligatorio'
+    // No required fields — title and description have defaults
   }
 
   return errors
@@ -62,10 +62,9 @@ export function isStepFullyComplete(step, state) {
     if (!state.homePage.enabled) return false
     const hasHero = !!(state.homePage.hero.title && state.homePage.hero.image)
     if (!hasHero) return false
-    if (state.homePage.infoSection.enabled) {
-      const allCards = state.homePage.infoSection.cards.every(c => c.image && c.title && c.description)
-      if (!allCards) return false
-    }
+    if (!state.homePage.infoSection.enabled) return false
+    const allCards = state.homePage.infoSection.cards.every(c => c.image && c.title && c.description)
+    if (!allCards) return false
     return true
   }
 

@@ -14,6 +14,7 @@ export default function Input({
   clearable,
   onFocus,
   onBlur,
+  onKeyDown,
 }) {
   const id = useId()
 
@@ -41,6 +42,7 @@ export default function Input({
           maxLength={maxLength}
           onFocus={onFocus}
           onBlur={onBlur}
+          onKeyDown={onKeyDown}
         />
         {clearable && value && (
           <button type="button" className={styles.clearBtn} onClick={handleClear}>

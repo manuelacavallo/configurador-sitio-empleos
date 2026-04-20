@@ -33,6 +33,7 @@ function ConfiguratorApp() {
   const handleExport = async () => {
     setExporting(true)
     setExportError(null)
+    setExportResult(null)
     try {
       const result = await exportConfiguration(state)
       setExportResult(result)

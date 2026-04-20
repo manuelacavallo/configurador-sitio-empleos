@@ -4,7 +4,7 @@ import Sidebar from './Sidebar'
 import PreviewPanel from './PreviewPanel'
 import StepFooter from './StepFooter'
 import Button from '../ui/Button'
-import { validateStep } from '../../utils/validation'
+import { validateStep, isStepDisabled } from '../../utils/validation'
 import styles from './WizardShell.module.css'
 
 export default function WizardShell({ children, onClose, onExport, exportDisabled, exporting }) {
@@ -75,7 +75,12 @@ export default function WizardShell({ children, onClose, onExport, exportDisable
                 ? (exporting ? 'Exportando...' : state.exported ? 'Volver a exportar' : 'Exportar')
                 : 'Siguiente'
             }
-            disableNext={state.currentStep === 3 ? (exportDisabled || exporting) : false}
+            disableNext={state.currentStep === 3
+              ? (exportDisabled || exporting)
+              : (isStepDisabled(state.currentStep, state)
+                  ? false
+                  : Object.keys(validateStep(state.currentStep, state)).length > 0)
+            }
           />
         </div>
       </div>

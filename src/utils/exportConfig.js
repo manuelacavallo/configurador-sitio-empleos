@@ -17,90 +17,95 @@ async function addFileToZip(zip, fileObj, filename) {
     const blob = await response.blob()
     zip.file(filename, blob)
   }
-  return `assets/${filename}`
+  return filename
 }
 
 export async function exportConfiguration(state) {
   const zip = new JSZip()
-  const assetsFolder = zip.folder('assets')
   const slug = state.general.urlSlug || 'config'
 
-  const faviconPath = state.general.favicon
-    ? await addFileToZip(assetsFolder, state.general.favicon, `favicon${getFileExtension(state.general.favicon)}`)
+  const faviconFilename = state.general.favicon
+    ? `favicon${getFileExtension(state.general.favicon)}`
     : null
+  if (faviconFilename) await addFileToZip(zip, state.general.favicon, faviconFilename)
 
-  const logoPath = state.general.logo
-    ? await addFileToZip(assetsFolder, state.general.logo, `logo${getFileExtension(state.general.logo)}`)
+  const logoFilename = state.general.logo
+    ? `logo${getFileExtension(state.general.logo)}`
     : null
+  if (logoFilename) await addFileToZip(zip, state.general.logo, logoFilename)
 
-  let heroPath = null
+  let heroFilename = null
   if (state.homePage.enabled && state.homePage.hero.image) {
-    heroPath = await addFileToZip(assetsFolder, state.homePage.hero.image, `hero${getFileExtension(state.homePage.hero.image)}`)
+    heroFilename = `hero${getFileExtension(state.homePage.hero.image)}`
+    await addFileToZip(zip, state.homePage.hero.image, heroFilename)
   }
 
-  const cardPaths = []
+  const cardFilenames = []
   if (state.homePage.enabled && state.homePage.infoSection.enabled) {
     for (let i = 0; i < state.homePage.infoSection.cards.length; i++) {
       const card = state.homePage.infoSection.cards[i]
       if (card.image) {
-        const path = await addFileToZip(assetsFolder, card.image, `card-${i + 1}${getFileExtension(card.image)}`)
-        cardPaths.push(path)
+        const filename = `card-${i + 1}${getFileExtension(card.image)}`
+        await addFileToZip(zip, card.image, filename)
+        cardFilenames.push(filename)
       } else {
-        cardPaths.push(null)
+        cardFilenames.push(null)
       }
     }
   }
 
-  let joblistImagePath = null
+  let joblistImageFilename = null
   if (state.jobList.image) {
-    joblistImagePath = await addFileToZip(assetsFolder, state.jobList.image, `joblist-header${getFileExtension(state.jobList.image)}`)
+    joblistImageFilename = `joblist-header${getFileExtension(state.jobList.image)}`
+    await addFileToZip(zip, state.jobList.image, joblistImageFilename)
   }
+
+  const homeCards = (state.homePage.enabled && state.homePage.infoSection.enabled)
+    ? state.homePage.infoSection.cards.map((card, i) => ({
+        image: cardFilenames[i] || null,
+        title: card.title,
+        description: card.description,
+        sortOrder: i,
+      }))
+    : []
 
   const config = {
-    instanceId: state.instanceId,
-    instanceName: state.instanceName,
-    general: {
-      siteName: state.general.siteName,
-      urlSlug: state.general.urlSlug,
-      favicon: faviconPath,
-      logo: logoPath,
-      privacyUrl: state.general.privacyUrl || null,
-      companyUrl: state.general.companyUrl || null,
-    },
-    homePage: {
-      enabled: state.homePage.enabled,
-      hero: {
-        title: state.homePage.hero.title,
-        image: heroPath,
-      },
-      infoSection: {
-        enabled: state.homePage.infoSection.enabled,
-        ...(state.homePage.infoSection.showTitleDescription
-          ? {
-              title: state.homePage.infoSection.title || null,
-              description: state.homePage.infoSection.description || null,
-            }
-          : {}),
-        cards: state.homePage.infoSection.cards.map((card, i) => ({
-          title: card.title,
-          description: card.description,
-          image: cardPaths[i] || null,
-        })),
-      },
-    },
-    jobList: {
-      title: state.jobList.title,
-      description: state.jobList.description || null,
-      image: joblistImagePath,
-    },
+    name: state.general.siteName,
+    active: true,
+    siteSlug: state.general.urlSlug,
+    logo: logoFilename,
+    favicon: faviconFilename,
+    websiteUrl: state.general.companyUrl || null,
+    privacyPolicyUrl: state.general.privacyUrl || null,
+    homeHeroTitle: state.homePage.enabled ? (state.homePage.hero.title || null) : null,
+    homeHeroImage: state.homePage.enabled ? heroFilename : null,
+    homeMainTitle: (state.homePage.enabled && state.homePage.infoSection.enabled && state.homePage.infoSection.showTitleDescription)
+      ? (state.homePage.infoSection.title || null)
+      : null,
+    homeMainDescription: (state.homePage.enabled && state.homePage.infoSection.enabled && state.homePage.infoSection.showTitleDescription)
+      ? (state.homePage.infoSection.description || null)
+      : null,
+    jobListHeroImage: joblistImageFilename,
+    jobListHeroTitle: state.jobList.title || null,
+    jobListHeroDescription: state.jobList.description || null,
+    homeCards,
   }
 
-  const configJson = JSON.stringify(config, null, 2)
+  const cleanConfig = Object.fromEntries(
+    Object.entries(config).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+  )
+
+  const configJson = JSON.stringify(cleanConfig, null, 2)
   const configBlob = new Blob([configJson], { type: 'application/json' })
   saveAs(configBlob, `${slug}-config.json`)
 
-  const zipBlob = await zip.generateAsync({ type: 'blob' })
-  saveAs(zipBlob, `${slug}-assets.zip`)
+  const hasImages = faviconFilename || logoFilename || heroFilename || joblistImageFilename || cardFilenames.some(Boolean)
+  if (hasImages) {
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    const zipBlob = await zip.generateAsync({ type: 'blob' })
+    saveAs(zipBlob, `${slug}-assets.zip`)
+    return { configName: `${slug}-config.json`, zipName: `${slug}-assets.zip` }
+  }
 
-  return { configName: `${slug}-config.json`, zipName: `${slug}-assets.zip` }
+  return { configName: `${slug}-config.json`, zipName: null }
 }

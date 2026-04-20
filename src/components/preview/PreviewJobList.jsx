@@ -44,10 +44,8 @@ export default function PreviewJobList({ focusArea }) {
 
         {/* Title + description */}
         <div className={styles.heroText}>
-          <h1 className={styles.heroTitle}>{jobList.title || 'Título'}</h1>
-          {jobList.description && (
-            <p className={styles.heroDesc}>{jobList.description}</p>
-          )}
+          <h1 className={styles.heroTitle}>{jobList.title || 'Forma parte de nuestro equipo'}</h1>
+          <p className={styles.heroDesc}>{jobList.description || 'Descubre nuestras oportunidades laborales y elige el puesto ideal para ti.'}</p>
         </div>
       </div>
 

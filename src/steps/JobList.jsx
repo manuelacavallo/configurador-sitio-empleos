@@ -24,20 +24,18 @@ export default function JobList({ errors, setFocusArea }) {
         <h3 className={styles.sectionTitle}>Encabezado</h3>
         <div className={styles.fields}>
           <Input
-            label="Título"
-            required
+            label="Título (opcional)"
             value={jobList.title}
             onChange={(v) => update({ title: v })}
-            placeholder="Título"
+            placeholder="Forma parte de nuestro equipo"
             clearable
-            error={errors?.['jobList.title']}
             onFocus={() => setFocusArea?.('hero')}
           />
           <Textarea
             label="Descripción (opcional)"
             value={jobList.description}
             onChange={(v) => update({ description: v })}
-            placeholder="Descripción"
+            placeholder="Descubre nuestras oportunidades laborales y elige el puesto ideal para ti."
             maxLength={250}
             onFocus={() => setFocusArea?.('hero')}
           />

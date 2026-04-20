@@ -17,7 +17,7 @@ export default function Sidebar() {
       {STEPS.map(({ label, step }) => {
         const isActive = state.currentStep === step
         const disabled = step < 3 && isStepDisabled(step, state)
-        const isComplete = step < 3 && !disabled && isStepComplete(step, state)
+        const isComplete = step < 3 && !disabled && isStepComplete(step, state) && state.currentStep > step
         const isExportComplete = step === 3 && state.exported
 
         return (
