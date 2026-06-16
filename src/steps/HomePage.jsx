@@ -56,7 +56,7 @@ export default function HomePage({ errors, setFocusArea }) {
                 <FileUpload
                   value={homePage.hero.image}
                   onChange={(v) => updateHero({ image: v })}
-                  helper="Resolución recomendada: 1440x600px"
+                  helper="Aspect ratio recomendado: 2:1 (ej: 1440x720px)"
                   error={errors?.['homePage.hero.image']}
                 />
               </div>
@@ -102,7 +102,7 @@ export default function HomePage({ errors, setFocusArea }) {
                         value={homePage.infoSection.description}
                         onChange={(v) => updateInfo({ description: v })}
                         placeholder="Descripción"
-                        maxLength={250}
+                        maxLength={500}
                         onFocus={() => setFocusArea?.('info')}
                       />
                     </>
@@ -118,7 +118,7 @@ export default function HomePage({ errors, setFocusArea }) {
                       <FileUpload
                         value={card.image}
                         onChange={(v) => updateCard(card.id, { image: v })}
-                        helper="Resolución recomendada"
+                        helper="Aspect ratio recomendado: 3:2 (ej: 900x600px)"
                         error={errors?.[`homePage.infoSection.cards.${index}.image`]}
                       />
                     </div>
@@ -137,7 +137,7 @@ export default function HomePage({ errors, setFocusArea }) {
                       value={card.description}
                       onChange={(v) => updateCard(card.id, { description: v })}
                       placeholder="Descripción"
-                      maxLength={250}
+                      maxLength={500}
                       error={errors?.[`homePage.infoSection.cards.${index}.description`]}
                       onFocus={() => setFocusArea?.('info')}
                     />

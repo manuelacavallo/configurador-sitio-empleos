@@ -36,7 +36,7 @@ export default function JobList({ errors, setFocusArea }) {
             value={jobList.description}
             onChange={(v) => update({ description: v })}
             placeholder="Descubre nuestras oportunidades laborales y elige el puesto ideal para ti."
-            maxLength={250}
+            maxLength={500}
             onFocus={() => setFocusArea?.('hero')}
           />
           <div>
@@ -44,6 +44,7 @@ export default function JobList({ errors, setFocusArea }) {
             <FileUpload
               value={jobList.image}
               onChange={(v) => update({ image: v })}
+              helper="Aspect ratio recomendado: 4:1 (ej: 1440x360px)"
             />
             <div style={{ marginTop: 16 }}>
               <InfoBox>
