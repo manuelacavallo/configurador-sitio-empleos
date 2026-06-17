@@ -11,7 +11,7 @@ function getExtension(name) {
   return name.split('.').pop().toUpperCase()
 }
 
-export default function FileUpload({ value, onChange, error, helper }) {
+export default function FileUpload({ value, onChange, error, helper, accept = '.jpg,.jpeg,.png', fileTypesLabel = 'Formatos permitidos: JPG o PNG hasta 50mb' }) {
   const inputRef = useRef(null)
 
   const handleFile = (file) => {
@@ -97,12 +97,12 @@ export default function FileUpload({ value, onChange, error, helper }) {
         <input
           ref={inputRef}
           type="file"
-          accept=".jpg,.jpeg,.png"
+          accept={accept}
           className={styles.hiddenInput}
           onChange={(e) => handleFile(e.target.files[0])}
         />
         <span className={styles.dropText}>Elija un archivo o arrástrelo aquí</span>
-        <span className={styles.dropSubtext}>Formatos permitidos: JPG o PNG hasta 50mb</span>
+        <span className={styles.dropSubtext}>{fileTypesLabel}</span>
         <span className={styles.uploadLink}>
           Subir archivo
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

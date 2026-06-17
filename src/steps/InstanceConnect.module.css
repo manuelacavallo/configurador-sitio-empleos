@@ -27,25 +27,8 @@
   font-size: 24px;
   font-weight: 600;
   line-height: 1.4;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
   color: var(--text-default);
-}
-
-.closeBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: var(--text-default);
-  border-radius: 8px;
-  padding: 8px;
-}
-.closeBtn:hover {
-  background: var(--neutral-50);
 }
 
 .content {
@@ -63,34 +46,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 24px;
+  gap: 32px;
+  padding: 40px 24px;
   background: var(--white);
   border: 1px solid var(--neutral-200);
   border-radius: 16px;
   box-sizing: border-box;
 }
 
-.icon {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #eff2ff;
-  border-radius: 50%;
-}
-
 .titleGroup {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   width: 100%;
 }
 
 .title {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: 0.2px;
@@ -109,51 +82,56 @@
   margin: 0;
 }
 
-.selectWrapper {
-  width: 100%;
-}
-
-.connected {
-  width: 100%;
+.options {
   display: flex;
-  flex-direction: column;
   gap: 16px;
+  width: 100%;
 }
 
-.connectedCard {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 16px;
-  background: #f5fdf6;
-  border: 1px solid #cff6d5;
-  border-left: 4px solid #4ed364;
-  border-radius: 4px;
-}
-
-.connectedIcon {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.connectedCard div {
+.optionCard {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 24px;
+  background: var(--white);
+  border: 1px solid var(--neutral-200);
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
-.connectedCard strong {
+.optionCard:hover {
+  border-color: var(--brand-400, #6f93eb);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.optionIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eff2ff;
+  border-radius: 50%;
+  color: #29317f;
+  flex-shrink: 0;
+}
+
+.optionTitle {
   font-size: 16px;
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: 0.2px;
-  color: #1f622c;
+  color: var(--text-default);
 }
 
-.connectedCard span {
+.optionDescription {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: 0.2px;
-  color: #1f622c;
+  color: var(--text-lighter);
 }
