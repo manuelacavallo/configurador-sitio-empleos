@@ -4,14 +4,16 @@ import Sidebar from './Sidebar'
 import PreviewPanel from './PreviewPanel'
 import StepFooter from './StepFooter'
 import Button from '../ui/Button'
+import ImportModal from '../ImportModal'
 import { validateStep, isStepDisabled } from '../../utils/validation'
 import styles from './WizardShell.module.css'
 
 export default function WizardShell({ children, onClose, onExport, exportDisabled, exporting }) {
-  const { state, dispatch, saveDraft } = useConfigurator()
+  const { state, dispatch } = useConfigurator()
   const [errors, setErrors] = useState({})
   const [focusArea, setFocusArea] = useState(null)
   const [showCloseConfirm, setShowCloseConfirm] = useState(false)
+  const [showImport, setShowImport] = useState(false)
 
   const handleNext = () => {
     if (state.currentStep < 3) {
@@ -37,8 +39,11 @@ export default function WizardShell({ children, onClose, onExport, exportDisable
     }
   }
 
-  const handleSaveDraft = async () => {
-    await saveDraft()
+  const handleImport = (importedState) => {
+    dispatch({
+      type: 'LOAD_STATE',
+      payload: { ...importedState, currentStep: 0, exported: false },
+    })
   }
 
   return (
@@ -46,8 +51,8 @@ export default function WizardShell({ children, onClose, onExport, exportDisable
       <div className={styles.header}>
         <h1 className={styles.headerTitle}>Configuración Sitio de Empleos</h1>
         <div className={styles.headerActions}>
-          <Button variant="secondary" onClick={handleSaveDraft}>
-            Guardar borrador
+          <Button variant="secondary" onClick={() => setShowImport(true)}>
+            Cargar archivo
           </Button>
           <button className={styles.closeBtn} onClick={handleClose}>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -84,6 +89,10 @@ export default function WizardShell({ children, onClose, onExport, exportDisable
           />
         </div>
       </div>
+
+      {showImport && (
+        <ImportModal onImport={handleImport} onClose={() => setShowImport(false)} />
+      )}
 
       {showCloseConfirm && (
         <div className={styles.overlay}>

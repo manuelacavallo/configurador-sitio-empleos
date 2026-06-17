@@ -11,13 +11,26 @@ import { exportConfiguration } from './utils/exportConfig'
 
 function ConfiguratorApp() {
   const { state, dispatch } = useConfigurator()
-  const [connected, setConnected] = useState(!!state.instanceId)
+  const [connected, setConnected] = useState(false)
   const [exporting, setExporting] = useState(false)
   const [exportResult, setExportResult] = useState(null)
   const [exportError, setExportError] = useState(null)
 
+  const handleImportAndConnect = (importedState) => {
+    dispatch({
+      type: 'LOAD_STATE',
+      payload: { ...importedState, currentStep: 0, exported: false },
+    })
+    setConnected(true)
+  }
+
   if (!connected) {
-    return <InstanceConnect onConnect={() => setConnected(true)} />
+    return (
+      <InstanceConnect
+        onConnect={() => setConnected(true)}
+        onImportAndConnect={handleImportAndConnect}
+      />
+    )
   }
 
   const handleNavigateToStep = (step) => {
