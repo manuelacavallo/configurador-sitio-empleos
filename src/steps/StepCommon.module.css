@@ -87,6 +87,19 @@
   letter-spacing: 0.2px;
 }
 
+.fieldRowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fieldRowLabel {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--text-default);
+}
+
 .whiteCard {
   background: var(--white);
   border-radius: 16px;
