@@ -3,7 +3,6 @@ import Toggle from '../components/ui/Toggle'
 import Input from '../components/ui/Input'
 import Textarea from '../components/ui/Textarea'
 import FileUpload from '../components/ui/FileUpload'
-import Checkbox from '../components/ui/Checkbox'
 import Accordion from '../components/ui/Accordion'
 import InfoBox from '../components/ui/InfoBox'
 import Button from '../components/ui/Button'
@@ -83,69 +82,76 @@ export default function HomePage({ errors, setFocusArea }) {
             {homePage.infoSection.enabled && (
               <div className={styles.fields}>
                 <div className={styles.whiteCard}>
-                  <Checkbox
-                    label="Añadir título y descripción a la sección"
-                    checked={homePage.infoSection.showTitleDescription}
-                    onChange={(v) => updateInfo({ showTitleDescription: v })}
-                  />
-                  {homePage.infoSection.showTitleDescription && (
+                  {(homePage.infoSection.showTitle ?? true) ? (
                     <>
+                      <div className={styles.fieldRowHeader}>
+                        <span className={styles.fieldRowLabel}>Título</span>
+                        <Button variant="danger" onClick={() => updateInfo({ showTitle: false, title: '' })}>Eliminar título</Button>
+                      </div>
                       <Input
-                        label="Título"
                         value={homePage.infoSection.title}
                         onChange={(v) => updateInfo({ title: v })}
-                        placeholder="Título"
+                        placeholder="Título de la sección"
                         onFocus={() => setFocusArea?.('info')}
                       />
+                    </>
+                  ) : (
+                    <Button variant="secondary" onClick={() => updateInfo({ showTitle: true })}>+ Añadir título</Button>
+                  )}
+
+                  {(homePage.infoSection.showDescription ?? true) ? (
+                    <>
+                      <div className={styles.fieldRowHeader}>
+                        <span className={styles.fieldRowLabel}>Descripción</span>
+                        <Button variant="danger" onClick={() => updateInfo({ showDescription: false, description: '' })}>Eliminar descripción</Button>
+                      </div>
                       <Textarea
-                        label="Descripción"
                         value={homePage.infoSection.description}
                         onChange={(v) => updateInfo({ description: v })}
-                        placeholder="Descripción"
+                        placeholder="Descripción de la sección"
                         maxLength={500}
                         onFocus={() => setFocusArea?.('info')}
                       />
                     </>
+                  ) : (
+                    <Button variant="secondary" onClick={() => updateInfo({ showDescription: true })}>+ Añadir descripción</Button>
                   )}
                 </div>
+
+                {homePage.infoSection.cards.some(c => (c.image || c.title?.trim() || c.description?.trim()) && !(c.image && c.title?.trim() && c.description?.trim())) && (
+                  <InfoBox variant="warning">
+                    Algunas cards están incompletas. Completa imagen, título y descripción en cada una, o elimínalas para continuar.
+                  </InfoBox>
+                )}
 
                 {homePage.infoSection.cards.map((card, index) => (
                   <Accordion key={card.id} title={`Card ${index + 1}`} defaultOpen={index === homePage.infoSection.cards.length - 1}>
                     <div>
-                      <label className={styles.fieldLabel}>
-                        Imagen<span className={styles.required}>*</span>
-                      </label>
+                      <label className={styles.fieldLabel}>Imagen</label>
                       <FileUpload
                         value={card.image}
                         onChange={(v) => updateCard(card.id, { image: v })}
                         helper="Aspect ratio recomendado: 3:2 (ej: 900x600px)"
-                        error={errors?.[`homePage.infoSection.cards.${index}.image`]}
                       />
                     </div>
                     <Input
                       label="Título"
-                      required
                       value={card.title}
                       onChange={(v) => updateCard(card.id, { title: v })}
                       placeholder="Título"
-                      error={errors?.[`homePage.infoSection.cards.${index}.title`]}
                       onFocus={() => setFocusArea?.('info')}
                     />
                     <Textarea
                       label="Descripción"
-                      required
                       value={card.description}
                       onChange={(v) => updateCard(card.id, { description: v })}
                       placeholder="Descripción"
                       maxLength={500}
-                      error={errors?.[`homePage.infoSection.cards.${index}.description`]}
                       onFocus={() => setFocusArea?.('info')}
                     />
-                    {homePage.infoSection.cards.length > 1 && (
-                      <Button variant="danger" onClick={() => removeCard(card.id)}>
-                        Eliminar
-                      </Button>
-                    )}
+                    <Button variant="danger" onClick={() => removeCard(card.id)}>
+                      Eliminar card
+                    </Button>
                   </Accordion>
                 ))}
 

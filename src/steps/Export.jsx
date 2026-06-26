@@ -94,9 +94,10 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
   const step2Full = isStepFullyComplete(2, state)
   const step1Disabled = isStepDisabled(1, state)
 
+  const isCardPartial = (c) => !!(c.image || c.title?.trim() || c.description?.trim()) && !isInfoCardComplete(c)
   const hasIncompleteInfoCards = state.homePage.enabled &&
     state.homePage.infoSection.enabled &&
-    state.homePage.infoSection.cards.some(c => !isInfoCardComplete(c))
+    state.homePage.infoSection.cards.some(isCardPartial)
 
   const getStatus = (complete, full, disabled) => {
     if (disabled) return 'disabled'
@@ -167,7 +168,7 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
                 <span className={styles.rowEmpty}>No configurada</span>
               ) : (
                 <>
-                  {state.homePage.infoSection.showTitleDescription && (
+                  {(state.homePage.infoSection.showTitle || state.homePage.infoSection.showDescription) && (
                     <>
                       <SummaryRow label="Título" value={state.homePage.infoSection.title || '—'} />
                       <SummaryRow label="Descripción" value={state.homePage.infoSection.description || '—'} />
@@ -178,12 +179,12 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
                       key={card.id}
                       label={`Card ${i + 1}`}
                       value={card.title || '—'}
-                      pending={!isInfoCardComplete(card)}
+                      pending={isCardPartial(card)}
                     />
                   ))}
                   {hasIncompleteInfoCards && (
                     <InfoBox variant="warning">
-                      Completá al menos una card con imagen, título y descripción para que la sección informativa se muestre en tu sitio.
+                      Las cards incompletas no se incluirán en el sitio. Completa imagen, título y descripción en cada card para que aparezcan.
                     </InfoBox>
                   )}
                 </>

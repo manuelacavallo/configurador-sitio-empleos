@@ -64,33 +64,50 @@ export default function PreviewHome({ focusArea }) {
       </div>
 
       {/* Info section */}
-      {homePage.infoSection.enabled && (
-        <div ref={infoRef} className={styles.infoSection}>
-          {homePage.infoSection.showTitleDescription && (
-            <>
-              {homePage.infoSection.title && (
-                <h2 className={styles.sectionTitle}>{homePage.infoSection.title}</h2>
-              )}
-              {homePage.infoSection.description && (
-                <p className={styles.sectionDesc}>{homePage.infoSection.description}</p>
-              )}
-            </>
-          )}
-          <div className={styles.cardsGrid}>
-            {homePage.infoSection.cards.map((card) => (
-              <div key={card.id} className={styles.infoCard}>
-                {card.image ? (
-                  <img src={card.image.dataUrl} alt="" className={styles.cardImage} />
-                ) : (
-                  <div className={styles.cardImagePlaceholder} />
-                )}
-                <h3 className={styles.cardTitle}>{card.title || 'Título'}</h3>
-                <p className={styles.cardDesc}>{card.description || 'Descripción'}</p>
-              </div>
-            ))}
+      {homePage.infoSection.enabled && (() => {
+        const showTitle = homePage.infoSection.showTitle ?? true
+        const showDescription = homePage.infoSection.showDescription ?? true
+        const completeCards = homePage.infoSection.cards.filter(
+          c => c.image && c.title?.trim() && c.description?.trim()
+        )
+        const placeholderCards = homePage.infoSection.cards.filter(
+          c => !(c.image && c.title?.trim() && c.description?.trim())
+        )
+        const cardsToShow = [
+          ...completeCards.map(c => ({ type: 'complete', card: c })),
+          ...placeholderCards.map(c => ({ type: 'placeholder', card: c })),
+        ]
+        return (
+          <div ref={infoRef} className={styles.infoSection}>
+            {showTitle && (
+              <h2 className={`${styles.sectionTitle} ${!homePage.infoSection.title ? styles.placeholder : ''}`}>
+                {homePage.infoSection.title || 'Título de la sección'}
+              </h2>
+            )}
+            {showDescription && (
+              <p className={`${styles.sectionDesc} ${!homePage.infoSection.description ? styles.placeholder : ''}`}>
+                {homePage.infoSection.description || 'Descripción de la sección informativa'}
+              </p>
+            )}
+            <div className={styles.cardsGrid}>
+              {cardsToShow.map(({ type, card }) => (
+                <div key={card.id} className={styles.infoCard}>
+                  {type === 'complete'
+                    ? <img src={card.image.dataUrl} alt="" className={styles.cardImage} />
+                    : <div className={styles.cardImagePlaceholder} />
+                  }
+                  <h3 className={`${styles.cardTitle} ${!card.title ? styles.placeholder : ''}`}>
+                    {card.title || 'Título'}
+                  </h3>
+                  <p className={`${styles.cardDesc} ${!card.description ? styles.placeholder : ''}`}>
+                    {card.description || 'Descripción'}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      })()}
 
       {/* Featured jobs */}
       <div ref={featuredRef} className={styles.featured}>

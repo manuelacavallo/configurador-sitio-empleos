@@ -61,12 +61,14 @@ export async function exportConfiguration(state) {
   }
 
   const homeCards = (state.homePage.enabled && state.homePage.infoSection.enabled)
-    ? state.homePage.infoSection.cards.map((card, i) => ({
-        image: cardFilenames[i] || null,
-        title: card.title,
-        description: card.description,
-        sortOrder: i,
-      }))
+    ? state.homePage.infoSection.cards
+        .filter((card) => card.image && card.title?.trim() && card.description?.trim())
+        .map((card, i) => ({
+          image: cardFilenames[state.homePage.infoSection.cards.indexOf(card)] || null,
+          title: card.title,
+          description: card.description,
+          sortOrder: i,
+        }))
     : []
 
   const config = {
@@ -79,10 +81,10 @@ export async function exportConfiguration(state) {
     privacyPolicyUrl: state.general.privacyUrl || null,
     homeHeroTitle: state.homePage.enabled ? (state.homePage.hero.title || null) : null,
     homeHeroImage: state.homePage.enabled ? heroFilename : null,
-    homeMainTitle: (state.homePage.enabled && state.homePage.infoSection.enabled && state.homePage.infoSection.showTitleDescription)
+    homeMainTitle: (state.homePage.enabled && state.homePage.infoSection.enabled && state.homePage.infoSection.showTitle)
       ? (state.homePage.infoSection.title || null)
       : null,
-    homeMainDescription: (state.homePage.enabled && state.homePage.infoSection.enabled && state.homePage.infoSection.showTitleDescription)
+    homeMainDescription: (state.homePage.enabled && state.homePage.infoSection.enabled && state.homePage.infoSection.showDescription)
       ? (state.homePage.infoSection.description || null)
       : null,
     jobListHeroImage: joblistImageFilename,
@@ -92,7 +94,7 @@ export async function exportConfiguration(state) {
   }
 
   const cleanConfig = Object.fromEntries(
-    Object.entries(config).filter(([, v]) => v !== null && v !== undefined && !(Array.isArray(v) && v.length === 0))
+    Object.entries(config).filter(([, v]) => v !== null && v !== undefined && v !== '' && !(Array.isArray(v) && v.length === 0))
   )
 
   const configJson = JSON.stringify(cleanConfig, null, 2)

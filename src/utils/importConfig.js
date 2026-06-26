@@ -62,7 +62,8 @@ export async function importFromFiles({ jsonFile, zipFile }) {
       },
       infoSection: {
         enabled: hasInfoSection,
-        showTitleDescription: !!(jsonData.homeMainTitle || jsonData.homeMainDescription),
+        showTitle: !!(jsonData.homeMainTitle),
+        showDescription: !!(jsonData.homeMainDescription),
         title: jsonData.homeMainTitle || '',
         description: jsonData.homeMainDescription || '',
         cards: cards.length > 0

@@ -14,9 +14,12 @@ export function validateStep(step, state) {
 
     if (state.homePage.infoSection.enabled) {
       state.homePage.infoSection.cards.forEach((card, i) => {
-        if (!card.image) errors[`homePage.infoSection.cards.${i}.image`] = 'Campo obligatorio'
-        if (!card.title.trim()) errors[`homePage.infoSection.cards.${i}.title`] = 'Campo obligatorio'
-        if (!card.description.trim()) errors[`homePage.infoSection.cards.${i}.description`] = 'Campo obligatorio'
+        const hasAnyField = card.image || card.title?.trim() || card.description?.trim()
+        if (hasAnyField) {
+          if (!card.image) errors[`homePage.infoSection.cards.${i}.image`] = 'Campo obligatorio'
+          if (!card.title?.trim()) errors[`homePage.infoSection.cards.${i}.title`] = 'Campo obligatorio'
+          if (!card.description?.trim()) errors[`homePage.infoSection.cards.${i}.description`] = 'Campo obligatorio'
+        }
       })
     }
   }

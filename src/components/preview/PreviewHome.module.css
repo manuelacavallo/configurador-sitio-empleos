@@ -110,6 +110,11 @@
   line-height: 1.4;
 }
 
+/* Placeholder text in preview */
+.placeholder {
+  opacity: 0.35;
+}
+
 /* Info section */
 .infoSection {
   padding: 24px;

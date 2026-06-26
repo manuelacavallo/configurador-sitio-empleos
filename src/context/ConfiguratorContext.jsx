@@ -31,7 +31,8 @@ const initialState = {
     },
     infoSection: {
       enabled: false,
-      showTitleDescription: false,
+      showTitle: true,
+      showDescription: true,
       title: '',
       description: '',
       cards: [{ id: generateCardId(), title: '', description: '', image: null }],

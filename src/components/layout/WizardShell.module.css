@@ -36,13 +36,12 @@
   border: none;
   background: none;
   cursor: pointer;
-  color: var(--neutral-400);
+  color: var(--text-default);
   border-radius: 8px;
   padding: 8px;
 }
 .closeBtn:hover {
   background: var(--neutral-50);
-  color: var(--text-default);
 }
 
 .body {
