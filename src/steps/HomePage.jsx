@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useConfigurator } from '../context/ConfiguratorContext'
 import Toggle from '../components/ui/Toggle'
 import Input from '../components/ui/Input'
@@ -9,6 +10,7 @@ import Button from '../components/ui/Button'
 import styles from './StepCommon.module.css'
 
 export default function HomePage({ errors, setFocusArea }) {
+  const { t } = useTranslation()
   const { state, dispatch } = useConfigurator()
   const { homePage } = state
 
@@ -22,14 +24,12 @@ export default function HomePage({ errors, setFocusArea }) {
   return (
     <>
       <div className={styles.stepHeader}>
-        <h2 className={styles.stepTitle}>Página de inicio</h2>
-        <p className={styles.stepDesc}>
-          Es la página de bienvenida de tu sitio de empleos. Puedes configurar el encabezado principal, una sección informativa opcional, y ver cómo se muestran los empleos destacados.
-        </p>
+        <h2 className={styles.stepTitle}>{t('homePage.title')}</h2>
+        <p className={styles.stepDesc}>{t('homePage.desc')}</p>
       </div>
 
       <Toggle
-        label="Mostrar página de inicio"
+        label={t('homePage.showToggle')}
         checked={homePage.enabled}
         onChange={(v) => updateHomePage({ enabled: v })}
       />
@@ -37,37 +37,37 @@ export default function HomePage({ errors, setFocusArea }) {
       {homePage.enabled && (
         <>
           <div className={styles.section}>
-            <h3 className={styles.sectionTitle}>Sección principal</h3>
+            <h3 className={styles.sectionTitle}>{t('homePage.heroSection')}</h3>
             <div className={styles.fields}>
               <Input
-                label="Título"
+                label={t('homePage.heroTitle')}
                 required
                 value={homePage.hero.title}
                 onChange={(v) => updateHero({ title: v })}
-                placeholder="Título principal"
+                placeholder={t('homePage.heroTitlePlaceholder')}
                 error={errors?.['homePage.hero.title']}
                 onFocus={() => setFocusArea?.('hero')}
               />
               <div>
                 <label className={styles.fieldLabel}>
-                  Imagen<span className={styles.required}>*</span>
+                  {t('homePage.heroImage')}<span className={styles.required}>*</span>
                 </label>
                 <FileUpload
                   value={homePage.hero.image}
                   onChange={(v) => updateHero({ image: v })}
-                  helper="Aspect ratio recomendado: 2:1 (ej: 1440x720px)"
+                  helper={t('homePage.heroImageHelper')}
                   error={errors?.['homePage.hero.image']}
                 />
               </div>
-              <InfoBox>El botón "Explorar empleos" es fijo y no configurable.</InfoBox>
+              <InfoBox>{t('homePage.heroButton')}</InfoBox>
             </div>
           </div>
 
           <div className={styles.section}>
             <div className={styles.toggleRow}>
               <div className={styles.toggleLabel}>
-                <span className={styles.toggleLabelText}>Sección informativa</span>
-                <span className={styles.toggleLabelDesc}>Imágenes, títulos y descripciones sobre tu empresa, cultura o beneficios.</span>
+                <span className={styles.toggleLabelText}>{t('homePage.infoSection')}</span>
+                <span className={styles.toggleLabelDesc}>{t('homePage.infoSectionDesc')}</span>
               </div>
               <Toggle
                 bare
@@ -85,86 +85,86 @@ export default function HomePage({ errors, setFocusArea }) {
                   {(homePage.infoSection.showTitle ?? true) ? (
                     <>
                       <div className={styles.fieldRowHeader}>
-                        <span className={styles.fieldRowLabel}>Título</span>
-                        <Button variant="danger" onClick={() => updateInfo({ showTitle: false, title: '' })}>Eliminar título</Button>
+                        <span className={styles.fieldRowLabel}>{t('homePage.infoTitle')}</span>
+                        <Button variant="danger" onClick={() => updateInfo({ showTitle: false, title: '' })}>{t('homePage.deleteTitle')}</Button>
                       </div>
                       <Input
                         value={homePage.infoSection.title}
                         onChange={(v) => updateInfo({ title: v })}
-                        placeholder="Título de la sección"
+                        placeholder={t('homePage.infoTitlePlaceholder')}
                         onFocus={() => setFocusArea?.('info')}
                       />
                     </>
                   ) : (
-                    <Button variant="secondary" onClick={() => updateInfo({ showTitle: true })}>+ Añadir título</Button>
+                    <Button variant="secondary" onClick={() => updateInfo({ showTitle: true })}>{t('homePage.addTitle')}</Button>
                   )}
 
                   {(homePage.infoSection.showDescription ?? true) ? (
                     <>
                       <div className={styles.fieldRowHeader}>
-                        <span className={styles.fieldRowLabel}>Descripción</span>
-                        <Button variant="danger" onClick={() => updateInfo({ showDescription: false, description: '' })}>Eliminar descripción</Button>
+                        <span className={styles.fieldRowLabel}>{t('homePage.infoDesc')}</span>
+                        <Button variant="danger" onClick={() => updateInfo({ showDescription: false, description: '' })}>{t('homePage.deleteDesc')}</Button>
                       </div>
                       <Textarea
                         value={homePage.infoSection.description}
                         onChange={(v) => updateInfo({ description: v })}
-                        placeholder="Descripción de la sección"
+                        placeholder={t('homePage.infoDescPlaceholder')}
                         maxLength={500}
                         onFocus={() => setFocusArea?.('info')}
                       />
                     </>
                   ) : (
-                    <Button variant="secondary" onClick={() => updateInfo({ showDescription: true })}>+ Añadir descripción</Button>
+                    <Button variant="secondary" onClick={() => updateInfo({ showDescription: true })}>{t('homePage.addDesc')}</Button>
                   )}
                 </div>
 
                 {homePage.infoSection.cards.some(c => (c.image || c.title?.trim() || c.description?.trim()) && !(c.image && c.title?.trim() && c.description?.trim())) && (
                   <InfoBox variant="warning">
-                    Algunas cards están incompletas. Completa imagen, título y descripción en cada una, o elimínalas para continuar.
+                    {t('homePage.cardsWarning')}
                   </InfoBox>
                 )}
 
                 {homePage.infoSection.cards.map((card, index) => (
-                  <Accordion key={card.id} title={`Card ${index + 1}`} defaultOpen={index === homePage.infoSection.cards.length - 1}>
+                  <Accordion key={card.id} title={t('homePage.cardTitle', { number: index + 1 })} defaultOpen={index === homePage.infoSection.cards.length - 1}>
                     <div>
-                      <label className={styles.fieldLabel}>Imagen</label>
+                      <label className={styles.fieldLabel}>{t('homePage.cardImage')}</label>
                       <FileUpload
                         value={card.image}
                         onChange={(v) => updateCard(card.id, { image: v })}
-                        helper="Aspect ratio recomendado: 3:2 (ej: 900x600px)"
+                        helper={t('homePage.cardImageHelper')}
                       />
                     </div>
                     <Input
-                      label="Título"
+                      label={t('homePage.cardTitleLabel')}
                       value={card.title}
                       onChange={(v) => updateCard(card.id, { title: v })}
-                      placeholder="Título"
+                      placeholder={t('homePage.cardTitlePlaceholder')}
                       onFocus={() => setFocusArea?.('info')}
                     />
                     <Textarea
-                      label="Descripción"
+                      label={t('homePage.cardDesc')}
                       value={card.description}
                       onChange={(v) => updateCard(card.id, { description: v })}
-                      placeholder="Descripción"
+                      placeholder={t('homePage.cardDescPlaceholder')}
                       maxLength={500}
                       onFocus={() => setFocusArea?.('info')}
                     />
                     <Button variant="danger" onClick={() => removeCard(card.id)}>
-                      Eliminar card
+                      {t('homePage.deleteCard')}
                     </Button>
                   </Accordion>
                 ))}
 
                 <Button variant="secondary" fullWidth onClick={addCard}>
-                  + Añadir card
+                  {t('homePage.addCard')}
                 </Button>
               </div>
             )}
           </div>
 
           <InfoBox variant="info">
-            <strong>Empleos destacados</strong><br />
-            Se muestran automáticamente cuando hay 3 o más empleos publicados. Si hay menos, esta sección no aparece en el sitio.
+            <strong>{t('homePage.featuredJobs')}</strong><br />
+            {t('homePage.featuredJobsHelper')}
           </InfoBox>
         </>
       )}

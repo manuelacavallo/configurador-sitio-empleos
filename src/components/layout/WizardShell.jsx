@@ -1,15 +1,18 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useConfigurator } from '../../context/ConfiguratorContext'
 import Sidebar from './Sidebar'
 import PreviewPanel from './PreviewPanel'
 import StepFooter from './StepFooter'
 import Button from '../ui/Button'
 import ImportModal from '../ImportModal'
+import LanguageSwitcher from '../ui/LanguageSwitcher'
 import { validateStep, isStepDisabled } from '../../utils/validation'
 import styles from './WizardShell.module.css'
 
 export default function WizardShell({ children, onClose, onExport, exportDisabled, exporting }) {
   const { state, dispatch } = useConfigurator()
+  const { t } = useTranslation()
   const [errors, setErrors] = useState({})
   const [focusArea, setFocusArea] = useState(null)
   const [showCloseConfirm, setShowCloseConfirm] = useState(false)
@@ -49,10 +52,11 @@ export default function WizardShell({ children, onClose, onExport, exportDisable
   return (
     <div className={styles.shell}>
       <div className={styles.header}>
-        <h1 className={styles.headerTitle}>Configuración Sitio de Empleos</h1>
+        <h1 className={styles.headerTitle}>{t('appTitle')}</h1>
         <div className={styles.headerActions}>
+          <LanguageSwitcher />
           <Button variant="secondary" onClick={() => setShowImport(true)}>
-            Cargar archivo
+            {t('header.loadFile')}
           </Button>
           <button className={styles.closeBtn} onClick={handleClose}>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -77,8 +81,8 @@ export default function WizardShell({ children, onClose, onExport, exportDisable
             showBack={state.currentStep > 0}
             nextLabel={
               state.currentStep === 3
-                ? (exporting ? 'Exportando...' : state.exported ? 'Volver a exportar' : 'Exportar')
-                : 'Siguiente'
+                ? (exporting ? t('common.exporting') : state.exported ? t('common.reexport') : t('common.export'))
+                : t('common.next')
             }
             disableNext={state.currentStep === 3
               ? (exportDisabled || exporting)
@@ -97,14 +101,14 @@ export default function WizardShell({ children, onClose, onExport, exportDisable
       {showCloseConfirm && (
         <div className={styles.overlay}>
           <div className={styles.dialog}>
-            <h3>Tienes cambios sin guardar</h3>
-            <p>¿Deseas salir sin guardar?</p>
+            <h3>{t('header.unsavedTitle')}</h3>
+            <p>{t('header.unsavedDesc')}</p>
             <div className={styles.dialogActions}>
               <Button variant="secondary" onClick={() => setShowCloseConfirm(false)}>
-                Cancelar
+                {t('common.cancel')}
               </Button>
               <Button variant="primary" onClick={() => onClose?.()}>
-                Salir sin guardar
+                {t('header.exitWithout')}
               </Button>
             </div>
           </div>

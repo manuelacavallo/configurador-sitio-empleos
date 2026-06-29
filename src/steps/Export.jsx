@@ -1,11 +1,12 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useConfigurator } from '../context/ConfiguratorContext'
 import { validateAllSteps, isStepFullyComplete, isStepDisabled, isInfoCardComplete } from '../utils/validation'
 import InfoBox from '../components/ui/InfoBox'
 import Button from '../components/ui/Button'
 import styles from './Export.module.css'
 
-function SummarySection({ title, status, children, onEdit }) {
+function SummarySection({ title, status, children, onEdit, editLabel }) {
   const [open, setOpen] = useState(true)
 
   return (
@@ -51,7 +52,7 @@ function SummarySection({ title, status, children, onEdit }) {
           {children}
           <div className={styles.editRow}>
             <Button variant="secondary" onClick={onEdit}>
-              Editar {title.toLowerCase()}
+              {editLabel}
             </Button>
           </div>
         </div>
@@ -60,12 +61,12 @@ function SummarySection({ title, status, children, onEdit }) {
   )
 }
 
-function SummaryRow({ label, value, pending }) {
+function SummaryRow({ label, value, pending, pendingLabel }) {
   return (
     <div className={styles.row}>
       <span className={styles.rowLabel}>{label}</span>
       {pending ? (
-        <span className={styles.rowPending}>Pendiente</span>
+        <span className={styles.rowPending}>{pendingLabel}</span>
       ) : (
         <span className={styles.rowValue}>{value}</span>
       )}
@@ -83,6 +84,7 @@ function SubSection({ title, children }) {
 }
 
 export default function Export({ onNavigateToStep, exportResult, exportError }) {
+  const { t } = useTranslation()
   const { state } = useConfigurator()
 
   const allErrors = validateAllSteps(state)
@@ -109,18 +111,16 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Resumen de configuración</h2>
-        <p className={styles.desc}>
-          Revisa tu configuración y descarga los archivos para subir a Humand Ops. Al exportar se descargan dos archivos, uno JSON con la configuración completa del sitio y un ZIP con todas las imágenes y logos que se usaron. Todos los campos obligatorios deben estar completos para poder exportar.
-        </p>
+        <h2 className={styles.title}>{t('export.title')}</h2>
+        <p className={styles.desc}>{t('export.desc')}</p>
       </div>
 
       {exportResult && (
         <InfoBox variant="success">
-          <strong>Configuración exportada</strong><br />
+          <strong>{t('export.exportedTitle')}</strong><br />
           {exportResult.zipName
-            ? `Se descargaron: ${exportResult.configName} y ${exportResult.zipName}`
-            : `Se descargó: ${exportResult.configName}`}
+            ? t('export.successBoth', { configName: exportResult.configName, zipName: exportResult.zipName })
+            : t('export.successJson', { configName: exportResult.configName })}
         </InfoBox>
       )}
 
@@ -129,62 +129,65 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
       )}
 
       <SummarySection
-        title="Configuración general"
+        title={t('sidebar.generalConfig')}
         status={getStatus(step0Complete, step0Full)}
         onEdit={() => onNavigateToStep(0)}
+        editLabel={t('export.edit', { title: t('sidebar.generalConfig').toLowerCase() })}
       >
-        <SubSection title="Información básica">
-          <SummaryRow label="Nombre del sitio" value={state.general.siteName} pending={!state.general.siteName} />
-          <SummaryRow label="URL de la página" value={`jobs.humand.co/${state.general.urlSlug}`} pending={!state.general.urlSlug} />
-          <SummaryRow label="Favicon" value={state.general.favicon ? 'Subido' : '—'} />
+        <SubSection title={t('export.basicInfo')}>
+          <SummaryRow label={t('export.siteName')} value={state.general.siteName} pending={!state.general.siteName} pendingLabel={t('common.pending')} />
+          <SummaryRow label={t('export.urlSlug')} value={`jobs.humand.co/${state.general.urlSlug}`} pending={!state.general.urlSlug} pendingLabel={t('common.pending')} />
+          <SummaryRow label={t('export.favicon')} value={state.general.favicon ? t('common.uploaded') : '—'} />
         </SubSection>
-        <SubSection title="Encabezado">
-          <SummaryRow label="Logo" value="Subido" pending={!state.general.logo} />
+        <SubSection title={t('export.header')}>
+          <SummaryRow label={t('export.logo')} value={t('common.uploaded')} pending={!state.general.logo} pendingLabel={t('common.pending')} />
         </SubSection>
-        <SubSection title="Pie de página">
-          <SummaryRow label="URL política de privacidad" value={state.general.privacyUrl} pending={!state.general.privacyUrl} />
-          <SummaryRow label="URL de la empresa" value={state.general.companyUrl || '—'} />
+        <SubSection title={t('export.footer')}>
+          <SummaryRow label={t('export.privacyUrl')} value={state.general.privacyUrl} pending={!state.general.privacyUrl} pendingLabel={t('common.pending')} />
+          <SummaryRow label={t('export.companyUrl')} value={state.general.companyUrl || '—'} />
         </SubSection>
       </SummarySection>
 
       <SummarySection
-        title="Página de inicio"
+        title={t('sidebar.homePage')}
         status={getStatus(step1Complete, step1Full, step1Disabled)}
         onEdit={() => onNavigateToStep(1)}
+        editLabel={t('export.edit', { title: t('sidebar.homePage').toLowerCase() })}
       >
         {step1Disabled ? (
           <InfoBox variant="warning" hideIcon>
-            <strong>Sección desactivada</strong><br />
-            La página de inicio no está habilitada. Para configurarla, activá el toggle desde la sección Página de inicio.
+            <strong>{t('export.sectionDisabled')}</strong><br />
+            {t('export.homeDisabledDesc')}
           </InfoBox>
         ) : (
           <>
-            <SubSection title="Sección principal">
-              <SummaryRow label="Título" value={state.homePage.hero.title} pending={!state.homePage.hero.title} />
-              <SummaryRow label="Imagen" value="Subido" pending={!state.homePage.hero.image} />
+            <SubSection title={t('export.heroSection')}>
+              <SummaryRow label={t('homePage.heroTitle')} value={state.homePage.hero.title} pending={!state.homePage.hero.title} pendingLabel={t('common.pending')} />
+              <SummaryRow label={t('homePage.heroImage')} value={t('common.uploaded')} pending={!state.homePage.hero.image} pendingLabel={t('common.pending')} />
             </SubSection>
-            <SubSection title="Sección informativa">
+            <SubSection title={t('export.infoSection')}>
               {!state.homePage.infoSection.enabled ? (
-                <span className={styles.rowEmpty}>No configurada</span>
+                <span className={styles.rowEmpty}>{t('common.notConfigured')}</span>
               ) : (
                 <>
                   {(state.homePage.infoSection.showTitle || state.homePage.infoSection.showDescription) && (
                     <>
-                      <SummaryRow label="Título" value={state.homePage.infoSection.title || '—'} />
-                      <SummaryRow label="Descripción" value={state.homePage.infoSection.description || '—'} />
+                      <SummaryRow label={t('homePage.infoTitle')} value={state.homePage.infoSection.title || '—'} />
+                      <SummaryRow label={t('homePage.infoDesc')} value={state.homePage.infoSection.description || '—'} />
                     </>
                   )}
                   {state.homePage.infoSection.cards.map((card, i) => (
                     <SummaryRow
                       key={card.id}
-                      label={`Card ${i + 1}`}
+                      label={t('export.cardLabel', { number: i + 1 })}
                       value={card.title || '—'}
                       pending={isCardPartial(card)}
+                      pendingLabel={t('common.pending')}
                     />
                   ))}
                   {hasIncompleteInfoCards && (
                     <InfoBox variant="warning">
-                      Las cards incompletas no se incluirán en el sitio. Completa imagen, título y descripción en cada card para que aparezcan.
+                      {t('export.cardsWarning')}
                     </InfoBox>
                   )}
                 </>
@@ -195,14 +198,15 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
       </SummarySection>
 
       <SummarySection
-        title="Lista de empleos"
+        title={t('sidebar.jobList')}
         status={getStatus(step2Complete, step2Full)}
         onEdit={() => onNavigateToStep(2)}
+        editLabel={t('export.edit', { title: t('sidebar.jobList').toLowerCase() })}
       >
-        <SubSection title="Encabezado">
-          <SummaryRow label="Título" value={state.jobList.title || 'Forma parte de nuestro equipo'} />
-          <SummaryRow label="Descripción" value={state.jobList.description || 'Descubre nuestras oportunidades laborales y elige el puesto ideal para ti.'} />
-          <SummaryRow label="Imagen" value={state.jobList.image ? 'Subido' : '—'} />
+        <SubSection title={t('jobList.header')}>
+          <SummaryRow label={t('jobList.jobTitle')} value={state.jobList.title || t('jobList.jobTitlePlaceholder')} />
+          <SummaryRow label={t('jobList.jobDesc')} value={state.jobList.description || t('jobList.jobDescPlaceholder')} />
+          <SummaryRow label={t('jobList.image')} value={state.jobList.image ? t('common.uploaded') : '—'} />
         </SubSection>
       </SummarySection>
     </div>

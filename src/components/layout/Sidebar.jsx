@@ -1,16 +1,18 @@
+import { useTranslation } from 'react-i18next'
 import { useConfigurator } from '../../context/ConfiguratorContext'
 import { isStepComplete, isStepDisabled } from '../../utils/validation'
 import styles from './Sidebar.module.css'
 
-const STEPS = [
-  { label: 'Configuración general', step: 0 },
-  { label: 'Página de inicio', step: 1 },
-  { label: 'Lista de empleos', step: 2 },
-  { label: 'Exportar', step: 3 },
-]
-
 export default function Sidebar() {
   const { state, dispatch } = useConfigurator()
+  const { t } = useTranslation()
+
+  const STEPS = [
+    { label: t('sidebar.generalConfig'), step: 0 },
+    { label: t('sidebar.homePage'), step: 1 },
+    { label: t('sidebar.jobList'), step: 2 },
+    { label: t('sidebar.export'), step: 3 },
+  ]
 
   return (
     <nav className={styles.sidebar}>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ConfiguratorProvider, useConfigurator } from './context/ConfiguratorContext'
 import InstanceConnect from './steps/InstanceConnect'
 import WizardShell from './components/layout/WizardShell'
@@ -11,6 +12,7 @@ import { exportConfiguration } from './utils/exportConfig'
 
 function ConfiguratorApp() {
   const { state, dispatch } = useConfigurator()
+  const { t } = useTranslation()
   const [connected, setConnected] = useState(false)
   const [exporting, setExporting] = useState(false)
   const [exportResult, setExportResult] = useState(null)
@@ -53,7 +55,7 @@ function ConfiguratorApp() {
       dispatch({ type: 'SET_EXPORTED' })
     } catch (e) {
       console.error('Export failed:', e)
-      setExportError('Error al exportar. Intenta nuevamente.')
+      setExportError(t('app.exportError'))
     } finally {
       setExporting(false)
     }

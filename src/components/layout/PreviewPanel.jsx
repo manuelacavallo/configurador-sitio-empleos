@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useConfigurator } from '../../context/ConfiguratorContext'
 import BrowserFrame from '../preview/BrowserFrame'
 import PreviewGeneral from '../preview/PreviewGeneral'
@@ -8,6 +9,7 @@ import Badge from '../ui/Badge'
 import styles from './PreviewPanel.module.css'
 
 export default function PreviewPanel({ focusArea }) {
+  const { t } = useTranslation()
   const [viewport, setViewport] = useState('desktop')
   const { state } = useConfigurator()
   const { general } = state
@@ -16,7 +18,7 @@ export default function PreviewPanel({ focusArea }) {
     ? `https://jobs.humand.co/${general.urlSlug}`
     : 'https://jobs.humand.co/tu-empresa'
 
-  const tabTitle = general.siteName || 'Nombre del sitio'
+  const tabTitle = general.siteName || t('generalConfig.siteNamePlaceholder')
 
   const renderPreview = () => {
     switch (state.currentStep) {
@@ -37,8 +39,8 @@ export default function PreviewPanel({ focusArea }) {
     <div className={styles.panel}>
       <div className={styles.header}>
         <div className={styles.titleGroup}>
-          <span className={styles.title}>Vista previa</span>
-          {state.currentStep > 0 && <Badge>Los datos son ilustrativos</Badge>}
+          <span className={styles.title}>{t('previewPanel.title')}</span>
+          {state.currentStep > 0 && <Badge>{t('previewPanel.illustrativeData')}</Badge>}
         </div>
         <div className={styles.viewportToggle}>
           <button

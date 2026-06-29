@@ -1,17 +1,19 @@
+import { useTranslation } from 'react-i18next'
 import { useConfigurator } from '../../context/ConfiguratorContext'
 import { useHighlight } from '../../hooks/useHighlight'
 import PreviewFooter from './PreviewFooter'
 import styles from './PreviewHome.module.css'
 
-const MOCK_JOBS = [
-  { dept: 'Departamento', name: 'Nombre empleo' },
-  { dept: 'Departamento', name: 'Nombre empleo' },
-  { dept: 'Departamento', name: 'Nombre empleo' },
-]
-
 export default function PreviewHome({ focusArea }) {
+  const { t } = useTranslation()
   const { state } = useConfigurator()
   const { general, homePage } = state
+
+  const mockJobs = [
+    { dept: t('preview.jobDept'), name: t('preview.jobName') },
+    { dept: t('preview.jobDept'), name: t('preview.jobName') },
+    { dept: t('preview.jobDept'), name: t('preview.jobName') },
+  ]
 
   const heroRef = useHighlight(focusArea, 'hero')
   const infoRef = useHighlight(focusArea, 'info')
@@ -24,8 +26,8 @@ export default function PreviewHome({ focusArea }) {
           <circle cx="16" cy="16" r="14" stroke="var(--neutral-300)" strokeWidth="2" />
           <path d="M16 11v6M16 21v0" stroke="var(--neutral-300)" strokeWidth="2" strokeLinecap="round" />
         </svg>
-        <strong>La página de inicio no está activa</strong>
-        <span>Los candidatos accederán directamente al listado de empleos.</span>
+        <strong>{t('preview.homeDisabled')}</strong>
+        <span>{t('preview.homeDisabledDesc')}</span>
       </div>
     )
   }
@@ -57,9 +59,9 @@ export default function PreviewHome({ focusArea }) {
         {/* Title + CTA centered */}
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>
-            {homePage.hero.title || 'Título principal'}
+            {homePage.hero.title || t('preview.heroTitlePlaceholder')}
           </h1>
-          <div className={styles.heroBtn}>Explorar empleos</div>
+          <div className={styles.heroBtn}>{t('preview.exploreJobs')}</div>
         </div>
       </div>
 
@@ -81,12 +83,12 @@ export default function PreviewHome({ focusArea }) {
           <div ref={infoRef} className={styles.infoSection}>
             {showTitle && (
               <h2 className={`${styles.sectionTitle} ${!homePage.infoSection.title ? styles.placeholder : ''}`}>
-                {homePage.infoSection.title || 'Título de la sección'}
+                {homePage.infoSection.title || t('preview.infoTitlePlaceholder')}
               </h2>
             )}
             {showDescription && (
               <p className={`${styles.sectionDesc} ${!homePage.infoSection.description ? styles.placeholder : ''}`}>
-                {homePage.infoSection.description || 'Descripción de la sección informativa'}
+                {homePage.infoSection.description || t('preview.infoDescPlaceholder')}
               </p>
             )}
             <div className={styles.cardsGrid}>
@@ -97,10 +99,10 @@ export default function PreviewHome({ focusArea }) {
                     : <div className={styles.cardImagePlaceholder} />
                   }
                   <h3 className={`${styles.cardTitle} ${!card.title ? styles.placeholder : ''}`}>
-                    {card.title || 'Título'}
+                    {card.title || t('preview.cardTitlePlaceholder')}
                   </h3>
                   <p className={`${styles.cardDesc} ${!card.description ? styles.placeholder : ''}`}>
-                    {card.description || 'Descripción'}
+                    {card.description || t('preview.cardDescPlaceholder')}
                   </p>
                 </div>
               ))}
@@ -111,9 +113,9 @@ export default function PreviewHome({ focusArea }) {
 
       {/* Featured jobs */}
       <div ref={featuredRef} className={styles.featured}>
-        <h2 className={styles.featuredTitle}>Empleos destacados</h2>
+        <h2 className={styles.featuredTitle}>{t('preview.featuredJobs')}</h2>
         <div className={styles.jobsList}>
-          {MOCK_JOBS.map((job, i) => (
+          {mockJobs.map((job, i) => (
             <div key={i} className={styles.jobCard}>
               <div>
                 <span className={styles.jobDept}>{job.dept}</span>
@@ -123,7 +125,7 @@ export default function PreviewHome({ focusArea }) {
             </div>
           ))}
         </div>
-        <div className={styles.exploreBtn}>Explorar empleos</div>
+        <div className={styles.exploreBtn}>{t('preview.exploreJobs')}</div>
       </div>
 
       <PreviewFooter
