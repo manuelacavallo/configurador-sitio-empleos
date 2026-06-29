@@ -1,19 +1,18 @@
+import { useTranslation } from 'react-i18next'
 import { useConfigurator } from '../../context/ConfiguratorContext'
 import { useHighlight } from '../../hooks/useHighlight'
 import PreviewFooter from './PreviewFooter'
 import styles from './PreviewJobList.module.css'
 
-const MOCK_JOBS = [
-  { dept: 'Departamento', name: 'Nombre empleo' },
-  { dept: 'Departamento', name: 'Nombre empleo' },
-  { dept: 'Departamento', name: 'Nombre empleo' },
-  { dept: 'Departamento', name: 'Nombre empleo' },
-  { dept: 'Departamento', name: 'Nombre empleo' },
-]
-
 export default function PreviewJobList({ focusArea }) {
+  const { t } = useTranslation()
   const { state } = useConfigurator()
   const { general, jobList } = state
+
+  const mockJobs = Array.from({ length: 5 }, () => ({
+    dept: t('preview.jobDept'),
+    name: t('preview.jobName'),
+  }))
 
   const heroRef = useHighlight(focusArea, 'hero')
   const searchRef = useHighlight(focusArea, 'search')
@@ -44,8 +43,8 @@ export default function PreviewJobList({ focusArea }) {
 
         {/* Title + description */}
         <div className={styles.heroText}>
-          <h1 className={styles.heroTitle}>{jobList.title || 'Forma parte de nuestro equipo'}</h1>
-          <p className={styles.heroDesc}>{jobList.description || 'Descubre nuestras oportunidades laborales y elige el puesto ideal para ti.'}</p>
+          <h1 className={styles.heroTitle}>{jobList.title || t('jobList.jobTitlePlaceholder')}</h1>
+          <p className={styles.heroDesc}>{jobList.description || t('jobList.jobDescPlaceholder')}</p>
         </div>
       </div>
 
@@ -57,20 +56,20 @@ export default function PreviewJobList({ focusArea }) {
               <circle cx="11" cy="11" r="6" stroke="var(--neutral-400)" strokeWidth="2" />
               <path d="M16 16l4 4" stroke="var(--neutral-400)" strokeWidth="2" strokeLinecap="round" />
             </svg>
-            <span className={styles.searchPlaceholder}>Busca por título o departamento</span>
+            <span className={styles.searchPlaceholder}>{t('preview.searchPlaceholder')}</span>
           </div>
           <div className={styles.filterBtn}>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M3 5h14M6 10h8M8 15h4" stroke="#29317F" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            Filtros
+            {t('preview.filters')}
           </div>
         </div>
 
-        <span className={styles.counter}>80 empleos disponibles</span>
+        <span className={styles.counter}>{t('preview.jobCount', { count: 80 })}</span>
 
         <div className={styles.jobList}>
-          {MOCK_JOBS.map((job, i) => (
+          {mockJobs.map((job, i) => (
             <div key={i} className={styles.jobCard}>
               <div>
                 <span className={styles.jobDept}>{job.dept}</span>
@@ -81,7 +80,7 @@ export default function PreviewJobList({ focusArea }) {
           ))}
         </div>
 
-        <div className={styles.loadMore}>Cargar más</div>
+        <div className={styles.loadMore}>{t('preview.loadMore')}</div>
       </div>
 
       <PreviewFooter

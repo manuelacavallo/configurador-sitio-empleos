@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next'
 import { useHighlight } from '../../hooks/useHighlight'
 import styles from './PreviewFooter.module.css'
 
 export default function PreviewFooter({ siteName, companyUrl, highlight, focusArea }) {
+  const { t } = useTranslation()
   const ref = useHighlight(highlight ? 'footer' : focusArea, 'footer')
 
   return (
@@ -11,8 +13,8 @@ export default function PreviewFooter({ siteName, companyUrl, highlight, focusAr
         {companyUrl && siteName && (
           <span className={styles.link}>{siteName}</span>
         )}
-        <span className={styles.link}>Política de privacidad</span>
-        <span className={styles.link}>Gestionar Cookies</span>
+        <span className={styles.link}>{t('preview.privacyPolicy')}</span>
+        <span className={styles.link}>{t('preview.manageCookies')}</span>
       </div>
     </div>
   )
