@@ -65,7 +65,11 @@
     "privacyUrl": "URL da política de privacidade",
     "privacyUrlPlaceholder": "URL",
     "companyUrl": "URL da empresa (opcional)",
-    "companyUrlHelper": "Se preenchido, o nome do site aparece no rodapé com um link para este endereço."
+    "footerWebsiteText": "Texto do link da URL da empresa (opcional)",
+    "footerWebsiteTextPlaceholder": "[Nome]",
+    "footerWebsiteTextFieldLabel": "Texto do link",
+    "footerWebsiteTextDefaultInfo": "Por padrão, usamos o nome do seu site de vagas como texto do link no rodapé.",
+    "footerWebsiteTextCustomize": "Personalizar"
   },
   "homePage": {
     "title": "Página inicial",
@@ -127,6 +131,7 @@
     "footer": "Rodapé",
     "privacyUrl": "URL da política de privacidade",
     "companyUrl": "URL da empresa",
+    "footerWebsiteText": "Texto do link da URL da empresa",
     "sectionDisabled": "Seção desativada",
     "homeDisabledDesc": "A página inicial não está habilitada. Para configurá-la, ative o toggle na seção Página inicial.",
     "heroSection": "Seção principal",
@@ -152,8 +157,7 @@
     "jobCount": "{{count}} empregos disponíveis",
     "filters": "Filtros",
     "loadMore": "Carregar mais",
-    "privacyPolicy": "Política de privacidade",
-    "manageCookies": "Gerenciar Cookies"
+    "privacyPolicy": "Política de privacidade"
   },
   "app": {
     "exportError": "Erro ao exportar. Tente novamente."

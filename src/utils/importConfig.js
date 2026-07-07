@@ -52,7 +52,8 @@ export async function importFromFiles({ jsonFile, zipFile }) {
       favicon,
       logo,
       privacyUrl: jsonData.privacyPolicyUrl || '',
-      companyUrl: jsonData.websiteUrl || '',
+      companyUrl: (typeof jsonData.websiteUrl === 'string' ? jsonData.websiteUrl : jsonData.websiteUrl?.url) || '',
+      footerWebsiteText: jsonData.websiteUrl?.footerWebsiteText || '',
     },
     homePage: {
       enabled: hasHomePage,

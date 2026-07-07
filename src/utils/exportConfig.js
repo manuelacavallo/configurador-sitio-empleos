@@ -77,7 +77,12 @@ export async function exportConfiguration(state) {
     siteSlug: state.general.urlSlug,
     logo: logoFilename,
     favicon: faviconFilename,
-    websiteUrl: state.general.companyUrl || null,
+    websiteUrl: state.general.companyUrl
+      ? {
+          url: state.general.companyUrl,
+          ...(state.general.footerWebsiteText ? { footerWebsiteText: state.general.footerWebsiteText } : {}),
+        }
+      : null,
     privacyPolicyUrl: state.general.privacyUrl || null,
     homeHeroTitle: state.homePage.enabled ? (state.homePage.hero.title || null) : null,
     homeHeroImage: state.homePage.enabled ? heroFilename : null,

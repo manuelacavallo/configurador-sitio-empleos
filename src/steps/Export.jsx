@@ -145,6 +145,12 @@ export default function Export({ onNavigateToStep, exportResult, exportError }) 
         <SubSection title={t('export.footer')}>
           <SummaryRow label={t('export.privacyUrl')} value={state.general.privacyUrl} pending={!state.general.privacyUrl} pendingLabel={t('common.pending')} />
           <SummaryRow label={t('export.companyUrl')} value={state.general.companyUrl || '—'} />
+          <SummaryRow
+            label={t('export.footerWebsiteText')}
+            value={state.general.companyUrl
+              ? (state.general.footerWebsiteText || `${state.general.siteName} website`)
+              : '—'}
+          />
         </SubSection>
       </SummarySection>
 
