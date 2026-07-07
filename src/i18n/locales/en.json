@@ -65,7 +65,11 @@
     "privacyUrl": "Privacy policy URL",
     "privacyUrlPlaceholder": "URL",
     "companyUrl": "Company URL (optional)",
-    "companyUrlHelper": "If filled, the site name appears in the footer with a link to this address."
+    "footerWebsiteText": "Text for the company URL link (optional)",
+    "footerWebsiteTextPlaceholder": "[Name]",
+    "footerWebsiteTextFieldLabel": "Link text",
+    "footerWebsiteTextDefaultInfo": "By default we use your jobs site name as the footer link text.",
+    "footerWebsiteTextCustomize": "Customize"
   },
   "homePage": {
     "title": "Home page",
@@ -127,6 +131,7 @@
     "footer": "Footer",
     "privacyUrl": "Privacy policy URL",
     "companyUrl": "Company URL",
+    "footerWebsiteText": "Text for the company URL link",
     "sectionDisabled": "Section disabled",
     "homeDisabledDesc": "The home page is not enabled. To configure it, turn on the toggle from the Home page section.",
     "heroSection": "Main section",
@@ -152,8 +157,7 @@
     "jobCount": "{{count}} available jobs",
     "filters": "Filters",
     "loadMore": "Load more",
-    "privacyPolicy": "Privacy policy",
-    "manageCookies": "Manage Cookies"
+    "privacyPolicy": "Privacy policy"
   },
   "app": {
     "exportError": "Export failed. Please try again."

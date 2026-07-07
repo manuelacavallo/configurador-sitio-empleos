@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useConfigurator } from '../context/ConfiguratorContext'
 import Input from '../components/ui/Input'
 import FileUpload from '../components/ui/FileUpload'
+import Button from '../components/ui/Button'
 import styles from './StepCommon.module.css'
 
 export default function GeneralConfig({ errors, setFocusArea }) {
@@ -97,13 +98,57 @@ export default function GeneralConfig({ errors, setFocusArea }) {
           <Input
             label={t('generalConfig.companyUrl')}
             value={general.companyUrl}
-            onChange={(v) => update({ companyUrl: v })}
+            onChange={(v) => update({
+              companyUrl: v,
+              ...(v ? {} : { footerWebsiteText: '', showFooterWebsiteText: false }),
+            })}
             placeholder={t('generalConfig.privacyUrlPlaceholder')}
-            helper={t('generalConfig.companyUrlHelper')}
             clearable
             onFocus={() => setFocusArea?.('footer')}
             onBlur={() => setFocusArea?.(null)}
           />
+          {general.companyUrl && (
+            (general.showFooterWebsiteText ?? !!general.footerWebsiteText) ? (
+              <div>
+                <div className={styles.fieldRowHeader}>
+                  <span className={styles.fieldRowLabel}>{t('generalConfig.footerWebsiteTextFieldLabel')}</span>
+                  <Button
+                    variant="link"
+                    onClick={() => update({ showFooterWebsiteText: false, footerWebsiteText: '' })}
+                  >
+                    {t('common.cancel')}
+                  </Button>
+                </div>
+                <Input
+                  value={general.footerWebsiteText}
+                  onChange={(v) => update({ footerWebsiteText: v })}
+                  placeholder={general.siteName ? `${general.siteName} website` : t('generalConfig.footerWebsiteTextPlaceholder')}
+                  clearable
+                  onFocus={() => setFocusArea?.('footer')}
+                  onBlur={() => setFocusArea?.(null)}
+                />
+              </div>
+            ) : (
+              <div className={styles.fieldRowHeader}>
+                <span className={styles.infoRow}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M9.5 14.5L14.5 9.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                    <path d="M11 6.5l1.19-1.19a4 4 0 015.66 5.66L16.5 12.5M13 17.5l-1.19 1.19a4 4 0 01-5.66-5.66L7.5 11.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  {t('generalConfig.footerWebsiteTextDefaultInfo')}
+                </span>
+                <Button
+                  variant="secondary"
+                  onClick={() => update({
+                    showFooterWebsiteText: true,
+                    footerWebsiteText: general.footerWebsiteText || `${general.siteName} website`,
+                  })}
+                >
+                  {t('generalConfig.footerWebsiteTextCustomize')}
+                </Button>
+              </div>
+            )
+          )}
         </div>
       </div>
     </>

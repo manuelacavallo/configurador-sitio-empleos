@@ -21,6 +21,7 @@ const initialState = {
     logo: null,
     privacyUrl: '',
     companyUrl: '',
+    footerWebsiteText: '',
   },
 
   homePage: {

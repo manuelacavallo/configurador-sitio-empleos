@@ -44,6 +44,7 @@ export default function PreviewGeneral({ focusArea }) {
       <PreviewFooter
         siteName={general.siteName}
         companyUrl={general.companyUrl}
+        footerWebsiteText={general.footerWebsiteText}
         focusArea={focusArea}
       />
     </div>
