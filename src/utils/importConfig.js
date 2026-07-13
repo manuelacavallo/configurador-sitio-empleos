@@ -53,7 +53,7 @@ export async function importFromFiles({ jsonFile, zipFile }) {
       logo,
       privacyUrl: jsonData.privacyPolicyUrl || '',
       companyUrl: (typeof jsonData.websiteUrl === 'string' ? jsonData.websiteUrl : jsonData.websiteUrl?.url) || '',
-      footerWebsiteText: jsonData.websiteUrl?.footerWebsiteText || '',
+      footerWebsiteText: jsonData.footerWebsiteText || jsonData.websiteUrl?.footerWebsiteText || '',
     },
     homePage: {
       enabled: hasHomePage,
